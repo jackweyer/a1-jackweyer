@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+    <title>DSCI 554 Lab 1 ex2</title>
+    <link href="./node_modules/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="./style.css">
+
+    <link rel="stylesheet" href="./github-dark-dimmed.min.css">
+    <script src="./highlight.min.js"></script>
+    <script>hljs.highlightAll();</script>
+  </head>
+
+<body>
+  <h1>🏋🏽‍♂️ ex2.1: Implement a Google Charts pie chart</h1>
+
+  <ol>
+    <li>Read <a target="_blank" href="https://developers.google.com/chart/interactive/docs/quick_start">Google
+        Charts Quick Start page</a></li>
+    <li>Understand the data layout</li>
+    <li>Implement the pie chart from the Quick Start page in the answer below to make sure it works!</li>
+    <li>Adapt the code to create a pie chart for the data of ex1.1 and add it to the answer below</li>
+  </ol>
+
+  <div class="answer">
+    <cap>Answer</cap>
+
+    <p>Google Charts Quick Start page pie chart:</p>
+  <head>
+    <!--Load the AJAX API-->
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+    <script type="text/javascript">
+
+      // Load the Visualization API and the corechart package.
+      google.charts.load('current', {'packages':['corechart']});
+
+      // Set a callback to run when the Google Visualization API is loaded.
+      google.charts.setOnLoadCallback(drawChart);
+
+      // Callback that creates and populates a data table,
+      // instantiates the pie chart, passes in the data and
+      // draws it.
+      function drawChart() {
+
+        // Create the data table.
+        var data = new google.visualization.DataTable();
+        data.addColumn('string', 'Topping');
+        data.addColumn('number', 'Slices');
+        data.addRows([
+          ['Mushrooms', 3],
+          ['Onions', 1],
+          ['Olives', 1],
+          ['Zucchini', 1],
+          ['Pepperoni', 2]
+        ]);
+
+        // Set chart options
+        var options = {'title':'How Much Pizza I Ate Last Night',
+                       'width':400,
+                       'height':300};
+
+        // Instantiate and draw our chart, passing in some options.
+        var chart = new google.visualization.PieChart(document.getElementById('chart_div'));
+        chart.draw(data, options);
+      }
+    </script>
+  </head>
+
+    <!--Div that will hold the pie chart-->
+    <div id="chart_div"></div>
+
+
+    <p>Pie chart for the 10 countries of ex1.1:</p>
+      <head>
+      <!--Load the AJAX API-->
+      <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+      <script type="text/javascript">
+
+      // Load the Visualization API and the corechart package.
+      google.charts.load('current', {'packages':['corechart']});
+
+      // Set a callback to run when the Google Visualization API is loaded.
+      google.charts.setOnLoadCallback(drawChart);
+
+      // Callback that creates and populates a data table,
+      // instantiates the pie chart, passes in the data and
+      // draws it.
+      function drawChart() {
+
+        // Create the data table.
+        var data = new google.visualization.DataTable();
+        data.addColumn('string', 'Country');
+        data.addColumn('number', 'Cases');
+        data.addRows([
+          ['Brazil', 22295621],
+          ['Cuba', 966473],
+          ['Fiji', 54147],
+          ['Germany', 7176814],
+          ['Guatemala', 628589],
+          ['Japan', 1732752],
+          ['New Zealand', 14255],
+          ['Norway', 396415],
+          ['Russia', 10340011],
+          ['US', 55028957]
+        ]);
+
+        // Set chart options
+        var options = {'title':'Cumulative COVID19 Cases of select countries by Jan. 1, 2022',
+                       'width':400,
+                       'height':300};
+
+        // Instantiate and draw our chart, passing in some options.
+        var chart = new google.visualization.PieChart(document.getElementById('chart_div2'));
+        chart.draw(data, options);
+      }
+    </script>
+  </head>
+
+
+    <!--Div that will hold the pie chart-->
+    <div id="chart_div2"></div>
+
+</div>
+
+
+<h2>🏋🏽‍♂️ ex2.2: D3 bar chart</h2>
+
+<div>Make sure the D3 code in <a target="_blank" href="./d3_bar_chart">d3_bar_chart</a> works, add the same bar chart to the Answer below, and adapt the code to create a bar chart using the data of ex1.1.</div>
+
+<div class="answer">
+  <script src='./node_modules/d3/dist/d3.min.js'></script>
+  <script src='./node_modules/d3-format/dist/d3-format.min.js'></script>
+  <style>
+    path {
+      stroke: black;
+    }
+
+    .tick line {
+      stroke: black;
+    }
+
+    .tick {
+      stroke: black;
+    }
+
+    .tick text {
+      stroke: none;
+      fill: black;
+    }
+
+    text.title {
+      font-size: 0.98em;
+      font-weight: bold;
+    }
+  </style>
+  <cap>Answer</cap>
+
+  <p>D3 bar chart for the 10 countries I have picked:</p>
+  
+  <svg id="chart" style="display: inline-block; vertical-align: top;"></svg>
+  <script>
+    var data = [
+    ['Brazil', 22295621],
+          ['Cuba', 966473],
+          ['Fiji', 54147],
+          ['Germany', 7176814],
+          ['Guatemala', 628589],
+          ['Japan', 1732752],
+          ['New Zealand', 14255],
+          ['Norway', 396415],
+          ['Russia', 10340011],
+          ['US', 55028957]
+    ];
+
+    var margin = { top: 40, right: 20, bottom: 20, left: 40 };
+    var width = 620 - margin.left - margin.right,
+      height = 300 - margin.top - margin.bottom;
+
+    var x = d3.scaleBand()
+      .domain(data.map(d => d[0]))
+      .range([0, width])
+      .paddingInner(.25);
+
+    var max = d3.max(data, d => d[1]);
+    var y = d3.scaleLinear()
+      .domain([0, max])
+      .range([height, 0]);
+
+    var xAxis = d3.axisBottom()
+      .scale(x);
+
+    var yAxis = d3.axisLeft()
+      .scale(y)
+      .tickFormat(d3.format('.2s'))
+      .ticks(2);
+
+    var svg = d3.select('#chart')
+      .attr('width', width + margin.left + margin.right)
+      .attr('height', height + margin.top + margin.bottom)
+      .append('g')
+      .attr('transform', 'translate(' + margin.left + ',' + margin.top + ')');
+
+    svg.selectAll('rect')
+      .data(data)
+      .enter()
+      .append('rect')
+      .attr('x', d => x(d[0]))
+      .attr('y', d => y(d[1]))
+      .attr('width', x.bandwidth)
+      .attr('height', d => { return height - y(d[1]); })
+      .style('fill', 'skyblue');
+
+    svg.append('g')
+      .attr('transform', 'translate(0,' + height + ')')
+      .call(xAxis);
+
+    svg.append('g')
+      .call(yAxis);
+
+    svg.append('text')
+      .attr('x', 20)
+      .attr('y', -20)
+      .attr('class', 'title')
+      .text('Cumulative COVID19 Cases of select countries by Jan. 1, 2022')
+  </script>
+</div>
+<a target="_blank" href="./index.html">⬅️ Back</a>
+</body>
+</html>

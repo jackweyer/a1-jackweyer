@@ -2,150 +2,27 @@
 <html>
 
 <head>
-    <title>DSCI 554 Assignment 1</title>
+  <link href="./node_modules/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="./style.css">
+
+  <link rel="stylesheet" href="./github-dark-dimmed.min.css">
+  <script src="./highlight.min.js"></script>
+  <script>hljs.highlightAll();</script>
+
+  <title>DSCI 554 Lab 1</title>
 </head>
 
 <body>
-    
-    1. This data comes from the UN Data website, under 'Public expenditure on education'. It was updated on November 1, 2021. Here  is a <a
-    target="_blank" href="http://data.un.org/_Docs/SYB/PDFs/SYB64_245_202110_Public%20expenditure%20on%20education.pdf">link</a> to the data.
-    The variable I selected was "Public expenditure on education (% of GDP)" over time.
 
-   <p> 2. Here is a <a target="_blank" href="https://docs.google.com/spreadsheets/d/1jZomqWvJF0UO2Vik5INyZPIF0EesFO1-pGEHDx94-nU/edit?usp=sharing">link</a> to my Google Sheets.</p>
 
-   <p> 3. SVG Image: </p>
-    <img src="education_plot.svg" />
+  <h1>DSCI 554 Lab 1</h1>
 
-    <p> 4. iframe: </p>
-    <iframe width="600" height="371" seamless frameborder="0" scrolling="no" src="https://docs.google.com/spreadsheets/d/e/2PACX-1vSvSMDK40AlTapApmTuyla4OV46Wo5fTEIEqzAvL39MZ4kYOk51YeipdMRFX3jkLM4c5rl5pBfPZOxj/pubchart?oid=2079155754&amp;format=interactive"></iframe>
-    
-    <p> 5. Google Charts Library:</p>
-        <head>
-            <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
-            <script type="text/javascript">
-        google.charts.load('current', {'packages':['line']});
-        google.charts.setOnLoadCallback(drawChart);
-  
-      function drawChart() {
-  
-        var data = new google.visualization.DataTable();
-        data.addColumn('number', 'Year');
-        data.addColumn('number', 'Australia');
-        data.addColumn('number', 'El Salvador');
-        data.addColumn('number', 'Hungary');
-        data.addColumn('number', 'Israel');
-        data.addColumn('number', 'Mexico');
-        data.addColumn('number', 'Poland');
-        data.addColumn('number', 'Senegal');
-        data.addColumn('number', 'Slovakia');
-        data.addColumn('number', 'Slovenia');
-        data.addColumn('number', 'Switzerland');
-  
-        data.addRows([
-          [2005, 4.9, 3.2, 5.3, 5.8, 4.8, 5.4, 4.1, 3.8, 5.6, 5.2],
-          [2010, 5.6, 4, 4.8, 5.5, 5.2, 5.1, 5.2, 4.1, 5.5, 4.9],
-          [2015, 5.3, 3.9, 4.5, 5.9, 5.2, 4.8, 5.5, 4.6, 4.9, 5.1],
-          [2016, 5.3, 3.8, 4.7, 5.9, 4.9, 4.6, 5.1, 3.9, 4.8, 5.1],
-          [2017, 5.1, 3.7, 4.7, 6.1, 4.5, 4.6, 4.8, 3.9, 4.8, 5.1]
-        ]);
-  
-        var options = {
-          chart: {
-            title: 'Public expenditure on education (% of GDP)',
-            subtitle: 'Soure: UN Data'
-          },
-          width: 900,
-          height: 500
-        };
-  
-        var chart = new google.charts.Line(document.getElementById('linechart_material'));
-  
-        chart.draw(data, google.charts.Line.convertOptions(options));
-      }
-      </script>
-</head>
-<body>
-    <!--Div that will hold the pie chart-->
-    <div id="linechart_material"></div>
-  </body>
+  <ul>
+    <li><a href="./getting-started.html">🚀 Getting started</a></li>
+    <li><a href="./ex1.html">🏋🏽‍♂️ ex1</a></li>
+    <li><a href="./ex2.html">🏋🏽‍♂️ ex2</a></li>
+  </ul>
 
-  <div class="q6">
-    <script src='./node_modules/d3/dist/d3.min.js'></script>
-    <script src='./node_modules/d3-format/dist/d3-format.min.js'></script>
-
-  <p> 6. D3 Bar Chart:</p>
-  <svg id="chart" style="display: inline-block; vertical-align: top;"></svg>
-  <script>
-    var data = [
-    ['Australia', 5.1],
-          ['El Salvador', 3.7],
-          ['Hungary', 4.7],
-          ['Israel', 6.1],
-          ['Mexico', 4.5],
-          ['Poland', 4.6],
-          ['Senegal', 4.8],
-          ['Slovakia', 3.9],
-          ['Slovenia', 4.8],
-          ['Switzerland', 5.1]
-    ];
-
-    var margin = { top: 40, right: 20, bottom: 20, left: 40 };
-    var width = 620 - margin.left - margin.right,
-      height = 300 - margin.top - margin.bottom;
-
-    var x = d3.scaleBand()
-      .domain(data.map(d => d[0]))
-      .range([0, width])
-      .paddingInner(.25);
-
-    var max = d3.max(data, d => d[1]);
-    var y = d3.scaleLinear()
-      .domain([0, max])
-      .range([height, 0]);
-
-    var xAxis = d3.axisBottom()
-      .scale(x);
-
-    var yAxis = d3.axisLeft()
-      .scale(y)
-      .tickFormat(d3.format('.2s'))
-      .ticks(2);
-
-    var svg = d3.select('#chart')
-      .attr('width', width + margin.left + margin.right)
-      .attr('height', height + margin.top + margin.bottom)
-      .append('g')
-      .attr('transform', 'translate(' + margin.left + ',' + margin.top + ')');
-
-    svg.selectAll('rect')
-      .data(data)
-      .enter()
-      .append('rect')
-      .attr('x', d => x(d[0]))
-      .attr('y', d => y(d[1]))
-      .attr('width', x.bandwidth)
-      .attr('height', d => { return height - y(d[1]); })
-      .style('fill', 'green');
-
-    svg.append('g')
-      .attr('transform', 'translate(0,' + height + ')')
-      .call(xAxis);
-
-    svg.append('g')
-      .call(yAxis);
-
-    svg.append('text')
-      .attr('x', 20)
-      .attr('y', -20)
-      .attr('class', 'title')
-      .text('Public expenditure on education (% of GDP) in 2017')
-  </script>
-</div>
-  <div>
-  <p>7. Plotly Chart</p>
-  <img src="newplot.png" />
-
-</div>
 </body>
 
 </html>
